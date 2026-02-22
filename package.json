@@ -20,10 +20,12 @@
     "prisma": "4.10.1",
     "tsup": "6.6.3",
     "tsx": "3.12.3",
+    "@types/bcryptjs": "2.4.6",
     "typescript": "4.9.5"
   },
   "dependencies": {
     "@prisma/client": "4.10.1",
+    "bcryptjs": "3.0.3",
     "dotenv": "16.0.3",
     "fastify": "4.13.0",
     "zod": "3.20.6"
