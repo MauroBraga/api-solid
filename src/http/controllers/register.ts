@@ -1,3 +1,4 @@
+import { registerUserCase } from '@/use-cases/register'
 import {FastifyReply, FastifyRequest,}  from 'fastify'
 import { z } from 'zod'
 
@@ -13,13 +14,10 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
     try {
         await registerUserCase({ name, email, password })
     } catch (err) {
-        return reply.status(409).send()
+        return reply.status(409).send(err instanceof Error ? err.message : 'An error occurred while registering the user')
     }
    
 
     return reply.status(201).send()
 }
 
-function registerUserCase(arg0: { name: string; email: string; password: string }) {
-    throw new Error('Function not implemented.')
-}
