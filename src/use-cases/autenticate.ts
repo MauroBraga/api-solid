@@ -1,6 +1,7 @@
 import { UserRepository } from "@/repository/user-repository";
 import { compare } from "bcryptjs";
 import { InvalidCredentialsError } from "./error/invalid-cedencials-error";
+import { User } from "@prisma/client";
 
 interface AuthenticateUseCaseRequest {
     email: string;
@@ -9,17 +10,12 @@ interface AuthenticateUseCaseRequest {
 
 interface AuthenticateUseCaseResponse {
     
-    user: {
-        id: string;
-        name: string;
-        email: string;
-    };
+    user: User;
 }
 
 export class AuthenticateUseCase {
 
     constructor(private userRepository: UserRepository) {
-        // Initialize any dependencies here, such as a user repository or authentication service
     }
 
     async execute({ email, password }: AuthenticateUseCaseRequest): Promise<AuthenticateUseCaseResponse> {
@@ -37,11 +33,7 @@ export class AuthenticateUseCase {
 
         return {
             
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-            },
+            user,
         };
     }
 }
