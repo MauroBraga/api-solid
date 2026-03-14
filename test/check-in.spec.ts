@@ -83,5 +83,24 @@ describe("Check-in Use Case", () => {
         expect(checkIn.id).toEqual(expect.any(String));
     })
 
+    //-22.9382471,-43.3473359,18
+    it("should not be able to check in if the user is not close to the gym", async () => {
+        vi.setSystemTime(new Date(2022, 0, 20, 8, 0, 0))
+        gymsRepository.items.push({
+            id: "gym-02",
+            title: "Gym-02",
+            description: "Gym-02",
+            latitude: new Prisma.Decimal(-22.9382471),
+            longitude: new Prisma.Decimal(-43.3473359),
+            phone: "123456789"
+        });
+
+        await expect(() => sut.execute({
+            gymId: "gym-02",
+            userId: "user-01",
+            userLatitude: -22.1382471,
+            userLongitude: -43.1473359,
+        })).rejects.toBeInstanceOf(Error);
+    })
 });
 
